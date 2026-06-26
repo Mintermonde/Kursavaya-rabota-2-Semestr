@@ -1,0 +1,174 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:KursMVVM.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="600"
+        x:Class="KursMVVM.Views.LoginWindow"
+        x:DataType="vm:LoginViewModel"
+        Title="Пункт обмена валюты — Авторизация"
+        Width="450" Height="600"
+        MinWidth="400" MinHeight="500"
+        WindowStartupLocation="CenterScreen"
+        CanResize="False">
+
+  <Window.Background>
+    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+      <GradientStop Offset="0" Color="#1A5276"/>
+      <GradientStop Offset="1" Color="#2980B9"/>
+    </LinearGradientBrush>
+  </Window.Background>
+
+  <Grid>
+    <!-- Фоновый декор -->
+    <Border Background="White" 
+            CornerRadius="12" 
+            Margin="24,32"
+            BoxShadow="0 8 32 0 #40000000">
+      <Grid Margin="32" RowDefinitions="Auto,Auto,*,Auto">
+        <!-- Заголовок -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,24">
+          <TextBlock Text="&#x1F4B1;" 
+                     FontSize="48" 
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,12"/>
+          <TextBlock Text="Пункт обмена валюты" 
+                     FontSize="22" 
+                     FontWeight="Bold"
+                     HorizontalAlignment="Center"
+                     Foreground="#2C3E50"/>
+          <TextBlock Text="{Binding IsRegisterMode, Converter={x:Static StringConverters.IsNullOrEmpty}, ConverterParameter='Вход в систему|Регистрация кассира'}"
+                     FontSize="14"
+                     HorizontalAlignment="Center"
+                     Foreground="#7F8C8D"
+                     Margin="0,8,0,0"/>
+        </StackPanel>
+
+        <!-- Сообщение -->
+        <TextBlock Grid.Row="1"
+                   Text="{Binding StatusMessage}"
+                   Foreground="#E74C3C"
+                   HorizontalAlignment="Center"
+                   TextWrapping="Wrap"
+                   Margin="0,0,0,16"/>
+
+        <!-- Форма входа -->
+        <StackPanel Grid.Row="2" 
+                    Spacing="14"
+                    IsVisible="{Binding !IsRegisterMode}">
+          <StackPanel>
+            <TextBlock Text="Логин" 
+                       FontWeight="SemiBold" 
+                       Foreground="#2C3E50"
+                       Margin="0,0,0,4"/>
+            <TextBox Text="{Binding Login}" 
+                     Watermark="Введите логин"
+                     Padding="12,8"
+                     CornerRadius="6"/>
+          </StackPanel>
+
+          <StackPanel>
+            <TextBlock Text="Пароль" 
+                       FontWeight="SemiBold" 
+                       Foreground="#2C3E50"
+                       Margin="0,0,0,4"/>
+            <TextBox Text="{Binding Password}" 
+                     Watermark="Введите пароль"
+                     PasswordChar="*"
+                     Padding="12,8"
+                     CornerRadius="6"/>
+          </StackPanel>
+
+          <Button Content="Войти" 
+                  Command="{Binding LoginCommand}"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  Background="#2980B9"
+                  Foreground="White"
+                  FontWeight="Bold"
+                  FontSize="15"
+                  Padding="14,10"
+                  CornerRadius="6"
+                  Margin="0,8,0,0"/>
+
+          <Button Content="Зарегистрировать кассира" 
+                  Command="{Binding ToggleModeCommand}"
+                  HorizontalAlignment="Center"
+                  Background="Transparent"
+                  Foreground="#2980B9"
+                  FontSize="13"/>
+        </StackPanel>
+
+        <!-- Форма регистрации -->
+        <StackPanel Grid.Row="2" 
+                    Spacing="12"
+                    IsVisible="{Binding IsRegisterMode}">
+          <StackPanel>
+            <TextBlock Text="Логин" FontWeight="SemiBold" Foreground="#2C3E50" Margin="0,0,0,4"/>
+            <TextBox Text="{Binding NewLogin}" Watermark="Придумайте логин" Padding="10,6" CornerRadius="6"/>
+          </StackPanel>
+
+          <StackPanel>
+            <TextBlock Text="Пароль" FontWeight="SemiBold" Foreground="#2C3E50" Margin="0,0,0,4"/>
+            <TextBox Text="{Binding NewPassword}" Watermark="Придумайте пароль" PasswordChar="*" Padding="10,6" CornerRadius="6"/>
+          </StackPanel>
+
+          <StackPanel>
+            <TextBlock Text="Подтвердите пароль" FontWeight="SemiBold" Foreground="#2C3E50" Margin="0,0,0,4"/>
+            <TextBox Text="{Binding ConfirmPassword}" Watermark="Повторите пароль" PasswordChar="*" Padding="10,6" CornerRadius="6"/>
+          </StackPanel>
+
+          <StackPanel>
+            <TextBlock Text="Кассир" FontWeight="SemiBold" Foreground="#2C3E50" Margin="0,0,0,4"/>
+            <ComboBox ItemsSource="{Binding Cashiers}"
+                      SelectedItem="{Binding SelectedCashier}"
+                      HorizontalAlignment="Stretch"
+                      Padding="10,6"
+                      CornerRadius="6">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding FullName}"/>
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+
+          <Button Content="Зарегистрировать" 
+                  Command="{Binding RegisterCommand}"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  Background="#27AE60"
+                  Foreground="White"
+                  FontWeight="Bold"
+                  FontSize="15"
+                  Padding="14,10"
+                  CornerRadius="6"
+                  Margin="0,8,0,0"/>
+
+          <Button Content="Назад ко входу" 
+                  Command="{Binding ToggleModeCommand}"
+                  HorizontalAlignment="Center"
+                  Background="Transparent"
+                  Foreground="#2980B9"
+                  FontSize="13"/>
+        </StackPanel>
+
+        <!-- Подсказка -->
+        <StackPanel Grid.Row="3" Margin="0,16,0,0">
+          <TextBlock Text="Демо-доступ:" 
+                     FontSize="11" 
+                     Foreground="#95A5A6"
+                     HorizontalAlignment="Center"/>
+          <TextBlock Text="admin / admin (Администратор)" 
+                     FontSize="11" 
+                     Foreground="#95A5A6"
+                     HorizontalAlignment="Center"/>
+          <TextBlock Text="cashier1 / cashier1 (Кассир)" 
+                     FontSize="11" 
+                     Foreground="#95A5A6"
+                     HorizontalAlignment="Center"/>
+        </StackPanel>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

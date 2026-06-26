@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:KursMVVM.ViewModels"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             xmlns:c="using:KursMVVM.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="650"
+             x:Class="KursMVVM.Views.ChartsView"
+             x:DataType="vm:ChartsViewModel">
+
+	<UserControl.Resources>
+		<c:EqualsConverter x:Key="EqualsConverter"/>
+	</UserControl.Resources>
+
+	<Grid Margin="24" RowDefinitions="Auto,Auto,*">
+		<TextBlock Grid.Row="0" Text="Графики и аналитика" FontSize="24" FontWeight="Bold" Margin="0,0,0,16"/>
+
+		<Grid Grid.Row="1" ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+			<ComboBox Grid.Column="0" ItemsSource="{Binding ChartNames}" SelectedIndex="{Binding SelectedChartIndex}" HorizontalAlignment="Stretch" Padding="10,8"/>
+			<Button Grid.Column="1" Content="Обновить" Command="{Binding LoadChartsCommand}" Background="#6C757D" Foreground="White" Padding="16,10" Margin="12,0,0,0" CornerRadius="6"/>
+		</Grid>
+
+		<Border Grid.Row="2" BorderBrush="#DDD" BorderThickness="1" CornerRadius="8" Background="White" Padding="16">
+			<Panel>
+				<lvc:CartesianChart Series="{Binding BarSeries}" XAxes="{Binding BarXAxes}" YAxes="{Binding BarYAxes}" LegendPosition="Bottom"
+									IsVisible="{Binding SelectedChartIndex, Converter={StaticResource EqualsConverter}, ConverterParameter=0}"/>
+				<lvc:PieChart Series="{Binding PieSeries}" LegendPosition="Right"
+							  IsVisible="{Binding SelectedChartIndex, Converter={StaticResource EqualsConverter}, ConverterParameter=1}"/>
+				<lvc:CartesianChart Series="{Binding LineSeries}" XAxes="{Binding LineXAxes}" YAxes="{Binding LineYAxes}" LegendPosition="Bottom"
+									IsVisible="{Binding SelectedChartIndex, Converter={StaticResource EqualsConverter}, ConverterParameter=2}"/>
+				<lvc:CartesianChart Series="{Binding HistogramSeries}" XAxes="{Binding HistogramXAxes}" YAxes="{Binding HistogramYAxes}" LegendPosition="Bottom"
+									IsVisible="{Binding SelectedChartIndex, Converter={StaticResource EqualsConverter}, ConverterParameter=3}"/>
+			</Panel>
+		</Border>
+	</Grid>
+</UserControl>

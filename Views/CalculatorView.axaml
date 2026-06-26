@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:KursMVVM.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="650"
+             x:Class="KursMVVM.Views.CalculatorView"
+             x:DataType="vm:CalculatorViewModel">
+
+  <ScrollViewer>
+    <Grid Margin="24" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+      <TextBlock Grid.Row="0" Text="Калькулятор обмена валют" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+      <StackPanel Grid.Row="1" Margin="0,0,0,14">
+        <TextBlock Text="Клиент:" FontWeight="SemiBold" Margin="0,0,0,6"/>
+        <ComboBox ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" HorizontalAlignment="Stretch" Padding="10,8">
+          <ComboBox.ItemTemplate>
+            <DataTemplate><TextBlock Text="{Binding FullName}"/></DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+
+      <StackPanel Grid.Row="2" Margin="0,0,0,14" IsVisible="{Binding CanChangeCashier}">
+        <TextBlock Text="Кассир:" FontWeight="SemiBold" Margin="0,0,0,6"/>
+        <ComboBox ItemsSource="{Binding Cashiers}" SelectedItem="{Binding SelectedCashier}" HorizontalAlignment="Stretch" Padding="10,8">
+          <ComboBox.ItemTemplate>
+            <DataTemplate><TextBlock Text="{Binding FullName}"/></DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+
+      <StackPanel Grid.Row="2" Margin="0,0,0,14" IsVisible="{Binding !CanChangeCashier}">
+        <TextBlock Text="Кассир:" FontWeight="SemiBold" Margin="0,0,0,6"/>
+        <Border Background="#E8F4FD" BorderBrush="#B8D9F0" BorderThickness="1" CornerRadius="6" Padding="10,8">
+          <TextBlock Text="{Binding SelectedCashier.FullName}" FontWeight="SemiBold"/>
+        </Border>
+      </StackPanel>
+
+      <Grid Grid.Row="3" ColumnDefinitions="*,20,*" Margin="0,0,0,14">
+        <StackPanel Grid.Column="0">
+          <TextBlock Text="Продает (отдает):" FontWeight="SemiBold" Margin="0,0,0,6"/>
+          <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding SoldCurrency}" HorizontalAlignment="Stretch" Padding="10,8">
+            <ComboBox.ItemTemplate>
+              <DataTemplate><TextBlock Text="{Binding Name}"/></DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+          <TextBlock Text="Покупает (получает):" FontWeight="SemiBold" Margin="0,0,0,6"/>
+          <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding BoughtCurrency}" HorizontalAlignment="Stretch" Padding="10,8">
+            <ComboBox.ItemTemplate>
+              <DataTemplate><TextBlock Text="{Binding Name}"/></DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </StackPanel>
+      </Grid>
+
+      <StackPanel Grid.Row="4" Margin="0,0,0,14">
+        <TextBlock Text="Сумма к обмену:" FontWeight="SemiBold" Margin="0,0,0,6"/>
+        <NumericUpDown Value="{Binding Amount}" Minimum="0" Maximum="999999999" FormatString="N2" HorizontalAlignment="Stretch"/>
+      </StackPanel>
+
+      <Border Grid.Row="5" Background="#E8F4FD" BorderBrush="#B8D9F0" BorderThickness="1" CornerRadius="8" Padding="18,14" Margin="0,0,0,18">
+        <StackPanel>
+          <TextBlock Text="Результат расчета:" FontWeight="Bold" Foreground="#2980B9" Margin="0,0,0,6"/>
+          <TextBlock Text="{Binding ResultText}" TextWrapping="Wrap" Foreground="#333" FontSize="15"/>
+        </StackPanel>
+      </Border>
+
+      <StackPanel Grid.Row="6" Orientation="Horizontal" Spacing="12" Margin="0,0,0,10">
+        <Button Content="Рассчитать" Command="{Binding CalculateCommand}" Background="#2980B9" Foreground="White" Padding="28,12" FontWeight="SemiBold" CornerRadius="6"/>
+        <Button Content="Создать сделку" Command="{Binding CreateDealCommand}" Background="#27AE60" Foreground="White" Padding="28,12" FontWeight="SemiBold" CornerRadius="6"/>
+      </StackPanel>
+
+      <TextBlock Grid.Row="7" Text="{Binding StatusMessage}" Foreground="#27AE60" FontSize="13"/>
+    </Grid>
+  </ScrollViewer>
+</UserControl>

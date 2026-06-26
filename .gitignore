@@ -1,0 +1,32 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# База данных (локальная)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Экспортированные файлы
+*.xlsx
+*.csv
+*.json
+*.xml
+*.pdf
+*.png
+
+# OS
+.DS_Store
+Thumbs.db

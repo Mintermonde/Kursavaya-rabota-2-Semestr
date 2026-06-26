@@ -1,0 +1,140 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:KursMVVM.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="using:KursMVVM.Views"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="750"
+        x:Class="KursMVVM.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="{Binding WindowTitle}"
+        Width="1200" Height="750"
+        MinWidth="900" MinHeight="600"
+        WindowStartupLocation="CenterScreen">
+
+	<Window.Styles>
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Margin" Value="4,2"/>
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="#2980B9"/>
+		</Style>
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="#34495E"/>
+		</Style>
+	</Window.Styles>
+
+	<Grid ColumnDefinitions="220,*">
+		<!-- Левая панель навигации -->
+		<Border Grid.Column="0" Background="#2C3E50">
+			<Grid RowDefinitions="Auto,*,Auto">
+				<!-- Заголовок -->
+				<StackPanel Grid.Row="0" Margin="16,20,16,12">
+					<TextBlock Text="&#x1F4B1;" FontSize="32" HorizontalAlignment="Center"/>
+					<TextBlock Text="Обмен валют"
+							   FontSize="16"
+							   FontWeight="Bold"
+							   Foreground="White"
+							   HorizontalAlignment="Center"
+							   Margin="0,8,0,4"/>
+					<TextBlock Text="{Binding AuthService.CurrentUserName}"
+							   FontSize="12"
+							   Foreground="#BDC3C7"
+							   HorizontalAlignment="Center"/>
+				</StackPanel>
+
+				<!-- Навигация -->
+				<ListBox Grid.Row="1"
+						 ItemsSource="{Binding VisibleNavItems}"
+						 SelectedItem="{Binding SelectedNavItem}"
+						 Background="Transparent"
+						 BorderThickness="0">
+					<ListBox.ItemTemplate>
+						<DataTemplate DataType="vm:NavItem">
+							<Border Padding="14,10" CornerRadius="6">
+								<StackPanel Orientation="Horizontal" Spacing="10">
+									<TextBlock Text="{Binding Icon}"
+											   FontSize="18"
+											   Foreground="White"
+											   VerticalAlignment="Center"/>
+									<TextBlock Text="{Binding Title}"
+											   FontSize="14"
+											   Foreground="White"
+											   VerticalAlignment="Center"/>
+								</StackPanel>
+							</Border>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+
+				<!-- Кнопки внизу панели -->
+				<StackPanel Grid.Row="2" Margin="12,8,12,16" Spacing="6">
+					<Button Command="{Binding LogoutCommand}"
+							HorizontalAlignment="Stretch"
+							HorizontalContentAlignment="Center"
+							Background="#34495E"
+							Foreground="White"
+							FontWeight="SemiBold"
+							Padding="12,10"
+							CornerRadius="6">
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<TextBlock Text="🔄" FontSize="16"/>
+							<TextBlock Text="Сменить пользователя" FontSize="13"/>
+						</StackPanel>
+					</Button>
+
+					<Button Command="{Binding ExitCommand}"
+							HorizontalAlignment="Stretch"
+							HorizontalContentAlignment="Center"
+							Background="#E74C3C"
+							Foreground="White"
+							FontWeight="SemiBold"
+							Padding="12,10"
+							CornerRadius="6">
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<TextBlock Text="🚪" FontSize="16"/>
+							<TextBlock Text="Выйти" FontSize="13"/>
+						</StackPanel>
+					</Button>
+				</StackPanel>
+			</Grid>
+		</Border>
+
+		<!-- Контентная область -->
+		<Border Grid.Column="1" Background="#F5F6FA">
+			<ContentControl Content="{Binding CurrentContent}" Margin="0">
+				<ContentControl.DataTemplates>
+					<DataTemplate DataType="vm:DealsViewModel">
+						<views:DealsView/>
+					</DataTemplate>
+					<DataTemplate DataType="vm:ClientsViewModel">
+						<views:ClientsView/>
+					</DataTemplate>
+					<DataTemplate DataType="vm:CashiersViewModel">
+						<views:CashiersView/>
+					</DataTemplate>
+					<DataTemplate DataType="vm:CurrenciesViewModel">
+						<views:CurrenciesView/>
+					</DataTemplate>
+					<DataTemplate DataType="vm:CalculatorViewModel">
+						<views:CalculatorView/>
+					</DataTemplate>
+					<DataTemplate DataType="vm:ReportsViewModel">
+						<views:ReportsView/>
+					</DataTemplate>
+					<DataTemplate DataType="vm:ChartsViewModel">
+						<views:ChartsView/>
+					</DataTemplate>
+					<DataTemplate DataType="vm:ImportExportViewModel">
+						<views:ImportExportView/>
+					</DataTemplate>
+					<DataTemplate DataType="vm:AuditViewModel">
+						<views:AuditView/>
+					</DataTemplate>
+				</ContentControl.DataTemplates>
+			</ContentControl>
+		</Border>
+	</Grid>
+</Window>
