@@ -19,12 +19,11 @@
 		<PackageReference Include="Avalonia.ReactiveUI" Version="11.2.0" />
 		<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.0" />
 
-		<!-- LiveCharts2 — явно ограничиваем SkiaSharp 2.88.x -->
+		<!-- LiveCharts2 -->
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc5" />
-		
-		<!-- Явно фиксируем SkiaSharp 2.88.9, чтобы LiveCharts не подтянул 3.x -->
-		<PackageReference Include="SkiaSharp" Version="2.88.9" />
-		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.9" />
+
+		<!-- SkiaSharp 3.x — соответствует требованию iTextSharp -->
+		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.116.1" />
 
 		<!-- SQLite -->
 		<PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.10" />
@@ -41,12 +40,5 @@
 		<!-- Crypto -->
 		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.9" />
-	</ItemGroup>
-
-	<!-- Принудительно разрешаем конфликты в пользу 2.88.9 -->
-	<ItemGroup>
-		<PackageReference Include="SkiaSharp" Version="2.88.9">
-			<ExcludeAssets>none</ExcludeAssets>
-		</PackageReference>
 	</ItemGroup>
 </Project>
