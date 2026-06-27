@@ -19,11 +19,11 @@
 		<PackageReference Include="Avalonia.ReactiveUI" Version="11.2.0" />
 		<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.0" />
 
-		<!-- LiveCharts2 для графиков — SkiaSharp подтянется автоматически -->
+		<!-- LiveCharts2 — явно ограничиваем SkiaSharp 2.88.x -->
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc5" />
-
+		
+		<!-- Явно фиксируем SkiaSharp 2.88.9, чтобы LiveCharts не подтянул 3.x -->
 		<PackageReference Include="SkiaSharp" Version="2.88.9" />
-
 		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.9" />
 
 		<!-- SQLite -->
@@ -43,7 +43,10 @@
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.9" />
 	</ItemGroup>
 
-<PropertyGroup>
-  <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-</PropertyGroup>
+	<!-- Принудительно разрешаем конфликты в пользу 2.88.9 -->
+	<ItemGroup>
+		<PackageReference Include="SkiaSharp" Version="2.88.9">
+			<ExcludeAssets>none</ExcludeAssets>
+		</PackageReference>
+	</ItemGroup>
 </Project>
