@@ -22,7 +22,9 @@
 		<!-- LiveCharts2 для графиков — SkiaSharp подтянется автоматически -->
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc5" />
 
-		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.8" />
+		<PackageReference Include="SkiaSharp" Version="2.88.9" />
+
+		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.9" />
 
 		<!-- SQLite -->
 		<PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.10" />
@@ -40,4 +42,8 @@
 		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.9" />
 	</ItemGroup>
+
+<PropertyGroup>
+  <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+</PropertyGroup>
 </Project>
