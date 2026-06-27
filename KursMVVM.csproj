@@ -22,6 +22,8 @@
 		<!-- LiveCharts2 для графиков — SkiaSharp подтянется автоматически -->
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc5" />
 
+		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.8" />
+
 		<!-- SQLite -->
 		<PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.10" />
 
